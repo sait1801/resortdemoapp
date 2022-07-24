@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1066201554278",
+    "project_id": "fir-61abd",
+    "storage_bucket": "fir-61abd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1066201554278:android:95fd934cf8f38732b97ca7",
+        "android_client_info": {
+          "package_name": "com.example.resortdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1066201554278-nh6612k2vq1mkb75tu296dc2v1mqh587.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVzkNnorrBlAwDHCIgp78sanJGY_apbt8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1066201554278-nh6612k2vq1mkb75tu296dc2v1mqh587.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

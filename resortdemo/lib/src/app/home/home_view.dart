@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:resortdemo/src/app/home/constants_home.dart';
 import 'package:resortdemo/src/app/home/home_controller.dart';
+import 'package:resortdemo/src/app/home/widgets/bottom_nav_bar.dart';
 import 'package:resortdemo/src/data/data_reservation_repository.dart';
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
 class HomeView extends View {
+  static const routeName = '/homeView';
   @override
   State<StatefulWidget> createState() => _HomeViewState(
         HomeController(
@@ -40,8 +43,12 @@ class _HomeViewState extends ViewState<HomeView, HomeController>
     return Scaffold(
       key: globalKey,
       backgroundColor: backGroundColor,
+      bottomNavigationBar: ControlledWidgetBuilder<HomeController>(
+          builder: (context, controller) {
+        return bottomNavBar(controller);
+      }),
       body: SafeArea(
-        child: Container(
+        child: SizedBox(
           height: size.height,
           width: size.width,
         ),

@@ -11,6 +11,7 @@ class HomeController extends Controller {
   ) : _presenter = HomePresenter(reservationRepository);
 
   List<Reservation> reservations = [];
+  int bottomNavIndex = 3;
 
   @override
   void onInitState() {
