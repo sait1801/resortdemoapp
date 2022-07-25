@@ -12,6 +12,7 @@ import 'package:resortdemo/src/data/data_reservation_repository.dart';
 class HomeView extends View {
   static const routeName = '/homeView';
   @override
+  // ignore: no_logic_in_create_state
   State<StatefulWidget> createState() => _HomeViewState(
         HomeController(
           DataReservationRepository(),
@@ -29,6 +30,7 @@ class _HomeViewState extends ViewState<HomeView, HomeController>
   late TabController _tabController;
 
   @override
+  // ignore: invalid_override_of_non_virtual_member
   void initState() {
     super.initState();
     _animationController = AnimationController(vsync: this);

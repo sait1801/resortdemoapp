@@ -3,13 +3,17 @@ import 'package:resortdemo/src/app/home/constants_home.dart';
 import 'package:resortdemo/src/app/home/home_controller.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:resortdemo/src/app/home/widgets/services.dart';
+import 'package:resortdemo/src/app/home/widgets/villas.dart';
 
 Widget animatedContainer(HomeController controller, Size size, Key globalKey) {
   return AnimatedContainer(
     duration: const Duration(milliseconds: 300),
     curve: Curves.ease,
     width: size.width,
-    height: controller.isVillaDetails ? size.height * 0.8 : size.height * 0.6,
+    height: controller.isVillaDetails
+        ? size.height * 0.8
+        : size.height *
+            0.55, //todo: this part must be 0.6 but IDK why there is a problem
     decoration: const BoxDecoration(
       borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
       color: kLightBackgroundColor,
@@ -37,6 +41,8 @@ Widget animatedContainer(HomeController controller, Size size, Key globalKey) {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Padding(
                       padding: EdgeInsets.only(
@@ -51,9 +57,23 @@ Widget animatedContainer(HomeController controller, Size size, Key globalKey) {
                       ),
                     ),
                     const SizedBox(
-                      height: 5,
+                      height: 10,
                     ),
                     servicesListView(size, context),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    const Text(
+                      'Villa Types',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    villasListView(size),
                   ],
                 ),
               ],

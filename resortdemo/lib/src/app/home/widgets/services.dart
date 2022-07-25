@@ -20,7 +20,7 @@ Widget servicesListView(Size size, BuildContext context) {
     Icons.group,
   ];
   return SizedBox(
-    height: 100,
+    height: 120,
     width: size.width,
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -64,7 +64,7 @@ Widget servicesCard(IconData icon, String text, BuildContext context) {
           ),
         ),
         const SizedBox(
-          height: 5,
+          height: 10,
         ),
         Text(
           text,
