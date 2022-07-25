@@ -7,6 +7,23 @@ class Reservation {
 
   Reservation(this.startDate, this.endDate, this.reservationType,
       this.villaType, this.id);
+
+  Reservation.fromMap(Map<String, dynamic> data)
+      : id = data['id'],
+        startDate = data['startDate'],
+        endDate = data['endDate'],
+        reservationType = data['reservationType'],
+        villaType = data['villaType'];
+
+  Map<String, dynamic> toMap(Reservation reservation) {
+    return {
+      "id": reservation.id,
+      "startDate": reservation.startDate,
+      "endDate": reservation.endDate,
+      "reservationType": reservation.reservationType,
+      "villaType": reservation.villaType,
+    };
+  }
 }
 
 enum ReservationType {

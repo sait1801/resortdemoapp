@@ -7,6 +7,11 @@ const primaryPink = Color(0xffFF6DB3);
 const primaryYellow = Color(0xffFFD66D);
 const primaryPurple = Color(0xffBF6DFF);
 
+const kPrimaryColor = Color(0xff2ECC71);
+const kLightBackgroundColor = Color(0xffFFFFFF);
+const kLightGreyColor = Color(0xffADADAD);
+const kDarkBackgroundColor = Color(0xff212121);
+
 const backGroundColor = Color(0xffFFFFFF);
 
 const lightTaskColorGreen = Color(0xffE8FFFB);

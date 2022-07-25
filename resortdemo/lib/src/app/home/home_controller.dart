@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:resortdemo/src/app/home/home_presenter.dart';
 import 'package:resortdemo/src/domain/entities/reservation.dart';
@@ -12,9 +13,14 @@ class HomeController extends Controller {
 
   List<Reservation> reservations = [];
   int bottomNavIndex = 3;
+  bool isVillaDetails = false;
+
+  late PageController pageController;
 
   @override
   void onInitState() {
+    pageController = PageController(initialPage: 0);
+
     _presenter.getReservations();
     super.onInitState();
   }

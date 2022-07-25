@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:resortdemo/src/app/home/constants_home.dart';
 import 'package:resortdemo/src/app/home/home_controller.dart';
+import 'package:resortdemo/src/app/home/widgets/animated_container.dart';
 import 'package:resortdemo/src/app/home/widgets/bottom_nav_bar.dart';
+import 'package:resortdemo/src/app/home/widgets/services.dart';
+import 'package:resortdemo/src/app/home/widgets/top_image.dart';
 import 'package:resortdemo/src/data/data_reservation_repository.dart';
-import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
 class HomeView extends View {
   static const routeName = '/homeView';
@@ -24,11 +26,17 @@ class _HomeViewState extends ViewState<HomeView, HomeController>
   ) : super(homeController);
 
   late AnimationController _animationController;
+  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(vsync: this);
+    _tabController = TabController(
+      initialIndex: 1,
+      length: 4,
+      vsync: this,
+    );
   }
 
   @override
@@ -41,16 +49,36 @@ class _HomeViewState extends ViewState<HomeView, HomeController>
   Widget get view {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      key: globalKey,
       backgroundColor: backGroundColor,
       bottomNavigationBar: ControlledWidgetBuilder<HomeController>(
           builder: (context, controller) {
-        return bottomNavBar(controller);
+        return bottomNavBar(controller, _tabController);
       }),
       body: SafeArea(
-        child: SizedBox(
-          height: size.height,
-          width: size.width,
+        child: Stack(
+          children: [
+            Positioned(
+              top: 0,
+              left: 0,
+              child: SizedBox(
+                height: size.height * 0.4,
+                width: size.width,
+                child: ControlledWidgetBuilder<HomeController>(
+                  builder: (context, controller) => topImage(controller, size),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              child: ControlledWidgetBuilder<HomeController>(
+                builder: (context, controller) => animatedContainer(
+                  controller,
+                  size,
+                  globalKey,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
