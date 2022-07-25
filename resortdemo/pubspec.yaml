@@ -49,7 +49,7 @@ flutter:
     - assets/images/home.jpg
     - assets/animations/spa_fitness.gif
     - assets/animations/nutirition.gif
-    - assets/animations/health_tracking.gif
+    - assets/animations/nutirition.gif
     - assets/animations/clinical_treatment.gif
     - assets/animations/intellectual_development.gif
     - assets/animations/social_recognition.gif
