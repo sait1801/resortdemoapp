@@ -33,6 +33,9 @@ dev_dependencies:
   #animations
   lottie: ^1.2.1
 
+  # custom pop up package
+  rflutter_alert: ^2.0.4
+
   flutter_lints: ^2.0.0
 
 flutter:
@@ -44,6 +47,12 @@ flutter:
     - assets/fonts/
     - assets/images/
     - assets/images/home.jpg
+    - assets/animations/spa_fitness.gif
+    - assets/animations/nutirition.gif
+    - assets/animations/health_tracking.gif
+    - assets/animations/clinical_treatment.gif
+    - assets/animations/intellectual_development.gif
+    - assets/animations/social_recognition.gif
 
   fonts:
     - family: Poppins

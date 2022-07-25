@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:resortdemo/src/app/home/widgets/service_popup.dart';
 
-Widget servicesListView(Size size) {
+Widget servicesListView(Size size, BuildContext context) {
   List<String> serviceNames = [
     "Fitness & Spa",
     "Balanced Nutrition\n Plan",
@@ -28,7 +29,7 @@ Widget servicesListView(Size size) {
         itemCount: serviceNames.length,
         itemBuilder: (context, index) => Row(
           children: [
-            servicesCard(icons[index], serviceNames[index]),
+            servicesCard(icons[index], serviceNames[index], context),
             const SizedBox(
               width: 15,
             )
@@ -39,22 +40,28 @@ Widget servicesListView(Size size) {
   );
 }
 
-Widget servicesCard(IconData icon, String text) {
+Widget servicesCard(IconData icon, String text, BuildContext context) {
   return GestureDetector(
-    onTap: () => print(text),
+    onTap: () => ServicePopup(context: context, text: text).showCustomPopUp(),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        const SizedBox(
+          height: 5,
+        ),
         Container(
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
               boxShadow: const [
-                BoxShadow(color: Colors.black26, blurRadius: 12)
+                BoxShadow(color: Colors.black12, blurRadius: 9)
               ]),
           width: 60,
           height: 60,
-          child: Icon(icon),
+          child: Icon(
+            icon,
+            color: const Color(0xff73c0c8),
+          ),
         ),
         const SizedBox(
           height: 5,

@@ -53,7 +53,7 @@ Widget animatedContainer(HomeController controller, Size size, Key globalKey) {
                     const SizedBox(
                       height: 5,
                     ),
-                    servicesListView(size),
+                    servicesListView(size, context),
                   ],
                 ),
               ],
