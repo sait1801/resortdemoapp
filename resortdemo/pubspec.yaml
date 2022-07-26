@@ -53,7 +53,9 @@ flutter:
     - assets/animations/clinical_treatment.gif
     - assets/animations/intellectual_development.gif
     - assets/animations/social_recognition.gif
-
+    - assets/images/onwater_villa.jpg
+    - assets/images/underwater_bed.jpg
+    - assets/images/weekend_apartment.jpg
   fonts:
     - family: Poppins
       fonts:

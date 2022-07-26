@@ -4,16 +4,14 @@ import 'package:resortdemo/src/app/home/home_controller.dart';
 
 Widget bottomNavBar(HomeController controller, TabController tabController) {
   final _iconList = [
+    Icons.rate_review,
     Icons.home,
-    Icons.search,
-    Icons.forum,
     Icons.person,
-    Icons.rate_review
   ];
 
   return MotionTabBar(
     initialSelectedTab: "Home",
-    labels: const ["Home", "Search", "Forum", "Person", "RateReview"],
+    labels: const ["Forum", "Home", "Person"],
     icons: _iconList,
     tabSize: 50,
     tabBarHeight: 55,

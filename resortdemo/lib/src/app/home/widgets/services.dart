@@ -68,7 +68,7 @@ Widget servicesCard(IconData icon, String text, BuildContext context) {
         ),
         Text(
           text,
-          textAlign: TextAlign.justify,
+          textAlign: TextAlign.center,
           maxLines: 2,
           style: const TextStyle(
             fontWeight: FontWeight.w600,

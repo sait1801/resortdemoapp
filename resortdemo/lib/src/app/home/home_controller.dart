@@ -16,6 +16,9 @@ class HomeController extends Controller {
   bool isVillaDetails = false;
 
   late PageController pageController;
+  String? topImagePath;
+  String? selectedVillaName;
+  String? selectedVillaDescription;
 
   @override
   void onInitState() {

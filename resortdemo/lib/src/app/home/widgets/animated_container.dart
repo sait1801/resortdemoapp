@@ -3,6 +3,7 @@ import 'package:resortdemo/src/app/home/constants_home.dart';
 import 'package:resortdemo/src/app/home/home_controller.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:resortdemo/src/app/home/widgets/services.dart';
+import 'package:resortdemo/src/app/home/widgets/villa_detail_screen.dart';
 import 'package:resortdemo/src/app/home/widgets/villas.dart';
 
 Widget animatedContainer(HomeController controller, Size size, Key globalKey) {
@@ -11,9 +12,9 @@ Widget animatedContainer(HomeController controller, Size size, Key globalKey) {
     curve: Curves.ease,
     width: size.width,
     height: controller.isVillaDetails
-        ? size.height * 0.8
+        ? size.height * 0.60
         : size.height *
-            0.55, //todo: this part must be 0.6 but IDK why there is a problem
+            0.50, //todo: this part must be 0.6 but IDK why there is a problem
     decoration: const BoxDecoration(
       borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
       color: kLightBackgroundColor,
@@ -33,9 +34,12 @@ Widget animatedContainer(HomeController controller, Size size, Key globalKey) {
         ControlledWidgetBuilder<HomeController>(builder: (context, controller) {
       return controller.isVillaDetails
           ? PageView(
+              //todo: no need for pageview actually but can be userd for more effective page designs
               controller: controller.pageController,
               physics: const NeverScrollableScrollPhysics(),
-              children: [],
+              children: [
+                villaDetailPage(controller),
+              ],
             )
           : Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,11 +61,11 @@ Widget animatedContainer(HomeController controller, Size size, Key globalKey) {
                       ),
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
                     servicesListView(size, context),
                     const SizedBox(
-                      height: 15,
+                      height: 10,
                     ),
                     const Text(
                       'Villa Types',
@@ -73,7 +77,7 @@ Widget animatedContainer(HomeController controller, Size size, Key globalKey) {
                     const SizedBox(
                       height: 10,
                     ),
-                    villasListView(size),
+                    villasListView(size, controller),
                   ],
                 ),
               ],

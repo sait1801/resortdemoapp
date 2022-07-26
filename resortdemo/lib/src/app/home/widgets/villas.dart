@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:resortdemo/src/app/home/home_controller.dart';
 
-Widget villasListView(Size size) {
+Widget villasListView(Size size, HomeController controller) {
   List<String> imagePaths = [
-    "https://pix10.agoda.net/hotelImages/165/165225/165225_15122916570038787834.jpg?ca=6&ce=1&s=1024x768",
-    "https://glitterrebel.com/wp-content/uploads/2019/12/HERO-IMAGE-best-underwater-hotels-in-the-world.jpg",
-    "https://media-cdn.tripadvisor.com/media/photo-s/22/08/0b/89/exterior.jpg",
+    "assets/images/onwater_villa.jpg",
+    "assets/images/underwater_bed.jpg",
+    "assets/images/weekend_apartment.jpg",
   ];
 
   List<String> names = [
@@ -23,7 +24,8 @@ Widget villasListView(Size size) {
         itemCount: 3,
         itemBuilder: (context, index) => Row(
           children: [
-            villaCard(imagePaths[index], names[index], (index == 3), size),
+            villaCard(imagePaths[index], names[index], (index == 3), size,
+                controller),
             const SizedBox(
               width: 15,
             )
@@ -34,12 +36,21 @@ Widget villasListView(Size size) {
   );
 }
 
-Widget villaCard(String imagePath, String name, bool isUpcoming, Size size) {
+Widget villaCard(String imagePath, String name, bool isUpcoming, Size size,
+    HomeController controller) {
   return GestureDetector(
-    onTap: () => print("BUraya Bakarlar"),
+    onTap: () {
+      controller.topImagePath = imagePath;
+      controller.isVillaDetails = true;
+      controller.selectedVillaName = name;
+      controller.selectedVillaDescription =
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In convallis dictum lectus, in gravida nibh pretium id. Mauris sit amet ultrices nulla. Nunc id neque et velit fermentum faucibus. Phasellus suscipit nibh non leo congue, sed accumsan sem vulputate. Quisque pellentesque vehicula mollis. Quisque sit amet urna ut dolor sodales sagittis. Curabitur in dui vitae nisi laoreet suscipit. In hac habitasse platea dictumst.";
+
+      controller.refreshScreeen();
+    },
     child: Container(
-      width: (size.width - 70) / 3,
-      height: 150,
+      width: (size.width - 60) / 3,
+      height: 160,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(30),
@@ -51,18 +62,20 @@ Widget villaCard(String imagePath, String name, bool isUpcoming, Size size) {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.all(5),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Container(
-              height: 80,
+              height: 110,
+              width: (size.width - 50) / 3 - 30,
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(60)),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: FittedBox(
                   fit: BoxFit.fill,
-                  child: Image.network(imagePath),
+                  child: Hero(tag: imagePath, child: Image.asset(imagePath)),
                 ),
               ),
             ),
@@ -73,10 +86,10 @@ Widget villaCard(String imagePath, String name, bool isUpcoming, Size size) {
               name,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.bold,
                 fontSize: 12,
               ),
-            )
+            ),
           ],
         ),
       ),
