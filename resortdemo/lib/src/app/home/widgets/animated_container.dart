@@ -38,7 +38,7 @@ Widget animatedContainer(HomeController controller, Size size, Key globalKey) {
               controller: controller.pageController,
               physics: const NeverScrollableScrollPhysics(),
               children: [
-                villaDetailPage(controller),
+                villaDetailPage(controller, size),
               ],
             )
           : Column(
@@ -50,7 +50,7 @@ Widget animatedContainer(HomeController controller, Size size, Key globalKey) {
                   children: [
                     const Padding(
                       padding: EdgeInsets.only(
-                        top: 15.0,
+                        top: 5.0,
                       ),
                       child: Text(
                         'Services',
@@ -65,7 +65,7 @@ Widget animatedContainer(HomeController controller, Size size, Key globalKey) {
                     ),
                     servicesListView(size, context),
                     const SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
                     const Text(
                       'Villa Types',
@@ -75,7 +75,7 @@ Widget animatedContainer(HomeController controller, Size size, Key globalKey) {
                       ),
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
                     villasListView(size, controller),
                   ],
