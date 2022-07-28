@@ -44,12 +44,8 @@ class DataUserRepository implements UserRepository {
           .where('email', isEqualTo: email)
           .get();
 
-      print(querySnapshot.docs.first.data());
-
       if (querySnapshot.docs.isNotEmpty) {
-        return querySnapshot.docs.first.data()['isActive'] == true
-            ? true
-            : false;
+        return true;
       }
 
       return false;

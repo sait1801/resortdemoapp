@@ -14,7 +14,7 @@ class StartAuthentication extends UseCase<void, StartAuthenticationParams> {
     try {
       await _authenticationRepository.startAuthentication(
         params!.email,
-        params!.password,
+        params.password,
       );
       controller.close();
     } catch (error, stackTrace) {

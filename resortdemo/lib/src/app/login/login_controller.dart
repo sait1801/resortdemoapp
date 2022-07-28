@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:resortdemo/src/app/navigation_helper.dart';
+import 'package:resortdemo/src/data/data_authentication_repository.dart';
 
 import '../../domain/repositories/authentication_repository.dart';
 import '../../domain/repositories/user_repository.dart';
@@ -13,21 +15,17 @@ class LoginController extends Controller {
       AuthenticationRepository authenticationRepository)
       : _presenter = LoginPresenter(userRepository, authenticationRepository);
 
-  late PageController pageController;
-
   String? email;
   String? password;
 
   @override
   void onDisposed() {
-    pageController.dispose();
     _presenter.dispose();
     super.onDisposed();
   }
 
   @override
   void onInitState() {
-    pageController = PageController(initialPage: 0);
     super.onInitState();
   }
 
@@ -37,6 +35,8 @@ class LoginController extends Controller {
       if (isUserOnFirestore) {
         _presenter.startAuthentication(email!, password!);
       } else {
+        DataAuthenticationRepository().startRegistration(email!,
+            password!); //todo: this will be fixed and became a usecase may be if not registered then become a memberpopup with quick info taking!!
         ScaffoldMessenger.of(getContext()).showSnackBar(
             const SnackBar(content: Text('You are not registered')));
       }
@@ -54,21 +54,19 @@ class LoginController extends Controller {
 
     _presenter.startAuthenticationOnComplete = () {
       FocusScope.of(getContext()).unfocus();
-      pageController.animateToPage(1,
-          duration: const Duration(milliseconds: 350), curve: Curves.linear);
+      NavigationHelper.navigateToHomeScreen(getContext());
     };
 
     _presenter.startAuthenticationOnError = (e) {
       PrimaryPopup(
         context: getContext(),
-        title: 'Zingo Paket',
-        content:
-            'Bir şeyler ters gitti, internet bağlantınızı kontrol edin veya uygulamayı yeniden başlatın',
+        title: 'Sorry',
+        content: 'Something Went Wrong Please Try Again',
       ).showDefaultPopup();
     };
   }
 
-  void chekIfUserOnFirestore(String? phoneNumber) {
-    if (phoneNumber != null) _presenter.checkIfUserOnFirestore(email!);
+  void chekIfUserOnFirestore(String? email) {
+    if (email != null) _presenter.checkIfUserOnFirestore(email);
   }
 }

@@ -9,7 +9,7 @@ Widget primaryButton(Color buttonColor, Color textColor, Function onPressed,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(4),
       color: buttonColor,
-      border: borderColor == null ? null : Border.all(color: borderColor!),
+      border: borderColor == null ? null : Border.all(color: borderColor),
     ),
     child: TextButton(
       onPressed: () => onPressed(),
