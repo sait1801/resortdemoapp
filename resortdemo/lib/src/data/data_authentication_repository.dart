@@ -1,25 +1,47 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:resortdemo/src/domain/repositories/authentication_repository.dart';
 
 class DataAuthenticationRepository implements AuthenticationRepository {
   static final _instance = DataAuthenticationRepository._internal();
+
   DataAuthenticationRepository._internal();
+
   factory DataAuthenticationRepository() => _instance;
 
-  UserCredential? user;
+  static final _firebaseAuth = FirebaseAuth.instance;
+
+  late String _verificationId;
 
   @override
-  Future<void> signInAnonymously() async {
+  Future<void> startAuthentication(String email, String password) async {
     try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInAnonymously();
-
-      user = userCredential;
+      email = email;
+      final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      rethrow;
     } catch (e) {
       print(e);
-      print("Error at DataAuthRepo");
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> startRegistraion(String email, String password) async {
+    try {
+      email = email;
+      final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      rethrow;
+    } catch (e) {
+      print(e);
       rethrow;
     }
   }

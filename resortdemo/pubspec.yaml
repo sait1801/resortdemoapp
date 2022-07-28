@@ -36,6 +36,9 @@ dev_dependencies:
   # custom pop up package
   rflutter_alert: ^2.0.4
 
+  #permission handler
+  permission_handler: ^10.0.0
+
   flutter_lints: ^2.0.0
 
 flutter:
@@ -56,6 +59,8 @@ flutter:
     - assets/images/onwater_villa.jpg
     - assets/images/underwater_bed.jpg
     - assets/images/weekend_apartment.jpg
+    - assets/images/Longevity_inTime.png
+    - assets/images/Longevity_inTimesvg.png
   fonts:
     - family: Poppins
       fonts:

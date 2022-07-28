@@ -64,6 +64,9 @@ Widget villaDetailPage(HomeController controller, Size size) {
             null,
             size,
           ),
+          const SizedBox(
+            height: 10,
+          ),
         ],
       ),
     ),

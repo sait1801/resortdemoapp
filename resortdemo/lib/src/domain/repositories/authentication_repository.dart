@@ -1,3 +1,3 @@
 abstract class AuthenticationRepository {
-  Future<void> signInAnonymously();
+  Future<void> startAuthentication(String email, String password);
 }

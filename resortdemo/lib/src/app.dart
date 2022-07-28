@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:resortdemo/src/app/splash/splash_view.dart';
 
 import 'app/home/home_view.dart';
 
@@ -12,8 +13,9 @@ class App extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/homeView',
+      initialRoute: '/splash',
       routes: {
+        SplashView.routeName: (ctx) => SplashView(),
         HomeView.routeName: (ctx) => HomeView(),
       },
       theme: ThemeData(

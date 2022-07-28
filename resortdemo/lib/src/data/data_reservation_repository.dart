@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:resortdemo/src/data/data_authentication_repository.dart';
+import 'package:resortdemo/src/data/data_user_repository.dart';
 import 'package:resortdemo/src/domain/entities/reservation.dart';
 import 'package:resortdemo/src/domain/repositories/reservation_repository.dart';
 
