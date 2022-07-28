@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:resortdemo/src/app/login/login_view.dart';
 import 'package:resortdemo/src/app/splash/splash_view.dart';
 
 import 'home/home_view.dart';
@@ -12,8 +13,7 @@ class NavigationHelper {
     Navigator.pushAndRemoveUntil(
       context,
       PageTransition(
-        // child: LoginView(), todo: this must be completed
-        child: HomeView(),
+        child: LoginView(),
         type: PageTransitionType.fade,
         curve: _TRANSITION_CURVE,
         duration: _TRANSITION_DURATION,
