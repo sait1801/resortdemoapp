@@ -13,6 +13,8 @@ class DataAuthenticationRepository implements AuthenticationRepository {
   @override
   Future<void> startAuthentication(String email, String password) async {
     try {
+      print("Start Auth");
+
       email = email;
       UserCredential userCredentials =
           await _firebaseAuth.signInWithEmailAndPassword(
@@ -20,7 +22,6 @@ class DataAuthenticationRepository implements AuthenticationRepository {
         password: password,
       );
     } on FirebaseAuthException catch (e) {
-      await startRegistration(email, password);
       print(e);
       rethrow;
     } catch (e) {
@@ -30,9 +31,10 @@ class DataAuthenticationRepository implements AuthenticationRepository {
   }
 
   @override
-  Future<void> startRegistration(String email, String password) async {
+  Future<void> startRegistration(
+      String email, String password, String name, String lastName) async {
     try {
-      print("HERE");
+      print("Start Registraion");
       email = email;
       await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,

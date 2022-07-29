@@ -18,14 +18,19 @@ class LoginController extends Controller {
   String? email;
   String? password;
 
+  late PageController pageController;
+
   @override
   void onDisposed() {
+    pageController.dispose();
     _presenter.dispose();
     super.onDisposed();
   }
 
   @override
   void onInitState() {
+    pageController = PageController(initialPage: 0);
+
     super.onInitState();
   }
 
@@ -35,10 +40,9 @@ class LoginController extends Controller {
       if (isUserOnFirestore) {
         _presenter.startAuthentication(email!, password!);
       } else {
-        DataAuthenticationRepository().startRegistration(email!,
-            password!); //todo: this will be fixed and became a usecase may be if not registered then become a memberpopup with quick info taking!!
-        ScaffoldMessenger.of(getContext()).showSnackBar(
-            const SnackBar(content: Text('You are not registered')));
+        FocusScope.of(getContext()).unfocus();
+        pageController.animateToPage(1,
+            duration: const Duration(milliseconds: 350), curve: Curves.linear);
       }
       FocusScope.of(getContext()).unfocus();
     };
@@ -46,9 +50,8 @@ class LoginController extends Controller {
     _presenter.checkIfUserOnFirestoreOnError = (e) {
       PrimaryPopup(
         context: getContext(),
-        title: 'Zingo Paket',
-        content:
-            'Bir şeyler ters gitti, internet bağlantınızı kontrol edin veya uygulamayı yeniden başlatın',
+        title: 'Sorry',
+        content: 'Something Went Wrong, Please Try Again.',
       ).showDefaultPopup();
     };
 

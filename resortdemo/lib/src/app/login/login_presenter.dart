@@ -1,4 +1,5 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:resortdemo/src/domain/usecases/register_user.dart' as regUser;
 
 import '../../domain/repositories/authentication_repository.dart';
 import '../../domain/repositories/user_repository.dart';
@@ -12,21 +13,24 @@ class LoginPresenter extends Presenter {
   late Function startAuthenticationOnComplete;
   late Function startAuthenticationOnError;
 
-  late Function verifySmsCodeOnNext;
-  late Function verifySmsCodeOnError;
+  late Function registerUserOnComplete;
+  late Function registerUserOnError;
 
   final CheckIfUserOnFirestore _checkIfUserOnFirestore;
   final StartAuthentication _startAuthentication;
+  final regUser.RegisterUser _registerUser;
 
   LoginPresenter(UserRepository userRepository,
       AuthenticationRepository authenticationRepository)
       : _checkIfUserOnFirestore = CheckIfUserOnFirestore(userRepository),
-        _startAuthentication = StartAuthentication(authenticationRepository);
+        _startAuthentication = StartAuthentication(authenticationRepository),
+        _registerUser = regUser.RegisterUser(authenticationRepository);
 
   @override
   void dispose() {
     _checkIfUserOnFirestore.dispose();
     _startAuthentication.dispose();
+    _registerUser.dispose();
   }
 
   checkIfUserOnFirestore(String email) {
@@ -37,6 +41,11 @@ class LoginPresenter extends Presenter {
   startAuthentication(String email, String password) {
     _startAuthentication.execute(_StartAuthenticationObserver(this),
         StartAuthenticationParams(email, password));
+  }
+
+  registerUser(String email, String password, String name, String lastName) {
+    _registerUser.execute(RegisterUserObserver(this),
+        regUser.RegisterUserParams(email, password, name, lastName));
   }
 }
 
@@ -76,4 +85,22 @@ class _StartAuthenticationObserver extends Observer<void> {
 
   @override
   void onNext(_) {}
+}
+
+class RegisterUserObserver extends Observer<void> {
+  final LoginPresenter _presenter;
+
+  RegisterUserObserver(this._presenter);
+  @override
+  void onComplete() {
+    _presenter.registerUserOnComplete();
+  }
+
+  @override
+  void onError(e) {
+    _presenter.registerUserOnError(e);
+  }
+
+  @override
+  void onNext(void response) {}
 }
