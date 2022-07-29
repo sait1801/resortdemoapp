@@ -35,7 +35,22 @@ Widget login(LoginController controller, Size size) {
             ],
           ),
         ),
-      )
+      ),
+      Positioned(
+          top: 0,
+          left: 0,
+          child: ElevatedButton(
+            onPressed: () {
+              controller.email = "s.burak2000@hotmail.com";
+              controller.password = "asdasd";
+              controller.chekIfUserOnFirestore("s.burak2000@hotmail.com");
+            },
+            child: Container(
+              width: 50,
+              height: 50,
+              color: Colors.white,
+            ),
+          )),
     ],
   );
 }
