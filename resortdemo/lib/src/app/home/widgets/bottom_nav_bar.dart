@@ -1,8 +1,12 @@
 import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
 import 'package:flutter/material.dart';
 import 'package:resortdemo/src/app/home/home_controller.dart';
+import 'package:resortdemo/src/app/navigation_helper.dart';
 
-Widget bottomNavBar(HomeController controller, TabController tabController) {
+import '../../forum/forum_controller.dart';
+import '../../login/login_controller.dart';
+
+Widget bottomNavBar(TabController tabController, BuildContext context) {
   final _iconList = [
     Icons.rate_review,
     Icons.home,
@@ -28,7 +32,11 @@ Widget bottomNavBar(HomeController controller, TabController tabController) {
     tabIconSelectedColor: Colors.white,
     tabBarColor: const Color(0xfffbfbfb),
     onTabItemSelected: (int value) {
-      controller.bottomNavIndex = value;
+      if (value == 0) {
+        NavigationHelper.navigateToForumView(context);
+      } else if (value == 1) {
+        NavigationHelper.navigateToHomeScreen(context);
+      }
     },
   );
 }

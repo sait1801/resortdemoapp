@@ -54,7 +54,7 @@ class _HomeViewState extends ViewState<HomeView, HomeController>
       backgroundColor: backGroundColor,
       bottomNavigationBar: ControlledWidgetBuilder<HomeController>(
           builder: (context, controller) {
-        return bottomNavBar(controller, _tabController);
+        return bottomNavBar(_tabController, context);
       }),
       body: SafeArea(
         child: Stack(
