@@ -23,6 +23,16 @@ class User {
         lastName = user.lastName,
         email = user.email;
 
-  @override
-  String toString() => '$id, $firstName, $lastName, $email';
+  Map<String, dynamic> toMap(User user, String password) {
+    return {
+      "id": user.id,
+      "firstName": user.firstName,
+      "lastName": user.lastName,
+      "email": user.email,
+      "password": password,
+    };
+
+    @override
+    String toString() => '$id, $firstName, $lastName, $email';
+  }
 }

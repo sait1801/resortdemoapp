@@ -10,10 +10,10 @@ class Reservation {
 
   Reservation.fromMap(Map<String, dynamic> data)
       : id = data['id'],
-        startDate = data['startDate'],
-        endDate = data['endDate'],
-        reservationType = data['reservationType'],
-        villaType = data['villaType'];
+        startDate = data['startDate'].toDate(),
+        endDate = data['endDate'].toDate(),
+        reservationType = resType(data['reservationType']),
+        villaType = villa(data['villaType']);
 
   Map<String, dynamic> toMap(Reservation reservation) {
     return {
@@ -26,8 +26,7 @@ class Reservation {
   }
 
   @override
-  String toString() =>
-      '$id, $startDate,$endDate, $reservationType, $reservationType';
+  String toString() => '$id, $startDate,$endDate, $reservationType, $villaType';
 }
 
 enum ReservationType {
@@ -39,4 +38,29 @@ enum VillaType {
   ONWATERRESORT,
   UNDERWATERBEDROOM,
   APARTMENT,
+}
+
+VillaType villa(String type) {
+  switch (type) {
+    case 'ONWATERRESORT':
+      return VillaType.ONWATERRESORT;
+
+    case 'UNDERWATERBEDROOM':
+      return VillaType.UNDERWATERBEDROOM;
+
+    case 'APARTMENT':
+      return VillaType.APARTMENT;
+  }
+  return VillaType.ONWATERRESORT;
+}
+
+ReservationType resType(String date) {
+  switch (date) {
+    case 'BUSINESS':
+      return ReservationType.BUSINESS;
+
+    case 'CUSTOMER':
+      return ReservationType.CUSTOMER;
+  }
+  return ReservationType.CUSTOMER;
 }

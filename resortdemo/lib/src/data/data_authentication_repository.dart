@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:resortdemo/src/data/data_user_repository.dart';
+import 'package:resortdemo/src/domain/entities/user.dart' as userEnt;
 import 'package:resortdemo/src/domain/repositories/authentication_repository.dart';
 
 class DataAuthenticationRepository implements AuthenticationRepository {
@@ -10,11 +14,14 @@ class DataAuthenticationRepository implements AuthenticationRepository {
 
   static final _firebaseAuth = FirebaseAuth.instance;
 
+  static final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  CollectionReference userReferance =
+      FirebaseFirestore.instance.collection("users");
+
   @override
   Future<void> startAuthentication(String email, String password) async {
     try {
       print("Start Auth");
-
       email = email;
       UserCredential userCredentials =
           await _firebaseAuth.signInWithEmailAndPassword(
@@ -34,12 +41,18 @@ class DataAuthenticationRepository implements AuthenticationRepository {
   Future<void> startRegistration(
       String email, String password, String name, String lastName) async {
     try {
-      print("Start Registraion");
+      print("Start Registration");
       email = email;
       await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+      userEnt.User user = userEnt.User(name, lastName, email, password);
+
+      final String userId = FirebaseAuth.instance.currentUser!.uid;
+
+      await userReferance.doc(userId).set(user.toMap(user, password));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
