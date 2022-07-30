@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 Widget primaryButton(Color buttonColor, Color textColor, Function onPressed,
-    String text, Color? borderColor, Size size) {
+    String text, Color? borderColor, Size size,
+    {String? icon}) {
   return Container(
     height: 45,
     width: size.width,
@@ -13,13 +14,28 @@ Widget primaryButton(Color buttonColor, Color textColor, Function onPressed,
     ),
     child: TextButton(
       onPressed: () => onPressed(),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: textColor,
-          fontWeight: FontWeight.w600,
-          fontSize: 16,
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          icon == null
+              ? Container()
+              : Row(
+                  children: [
+                    Image.asset(icon),
+                    const SizedBox(
+                      width: 15,
+                    )
+                  ],
+                ),
+          Text(
+            text,
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+            ),
+          ),
+        ],
       ),
     ),
   );
