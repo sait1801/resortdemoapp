@@ -18,41 +18,16 @@ class DataReservationRepository implements ReservationRepository {
       FirebaseFirestore.instance.collection("reservations");
 
   String? userId;
-  List<Reservation> reservations = [
-    Reservation(
-      DateTime(2022),
-      DateTime(2022),
-      ReservationType.CUSTOMER,
-      VillaType.ONWATERRESORT,
-      "1",
-    ),
-    Reservation(
-      DateTime(2022),
-      DateTime(2022),
-      ReservationType.CUSTOMER,
-      VillaType.ONWATERRESORT,
-      "2",
-    ),
-    Reservation(
-      DateTime(2022),
-      DateTime(2022),
-      ReservationType.CUSTOMER,
-      VillaType.ONWATERRESORT,
-      "3",
-    ),
-    Reservation(
-      DateTime(2022),
-      DateTime(2022),
-      ReservationType.CUSTOMER,
-      VillaType.ONWATERRESORT,
-      "4",
-    )
-  ];
+  List<Reservation> reservations = [];
 
   @override
   Future<void> createReservation(Reservation reservation) async {
     try {
+      print('reztype: ${reservation.reservationType}');
       reservations.add(reservation);
+      await reservationReference
+          .doc(reservation.id)
+          .set(reservation.toMap(reservation));
     } catch (e) {
       print(e);
       rethrow;
@@ -61,12 +36,28 @@ class DataReservationRepository implements ReservationRepository {
 
   @override
   Future<void> deleteReservation(String reservationId) async {
-    reservations.removeWhere((element) => element.id == reservationId);
+    try {
+      reservations.removeWhere((element) => element.id == reservationId);
+      await reservationReference.doc(reservationId).delete();
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
   }
 
   @override
   Future<List<Reservation>> readReservations() async {
     try {
+      reservations = [];
+      final pastReservationsSnapshot =
+          await userReferance.doc(userId).collection('reservations').get();
+      if (pastReservationsSnapshot.docs.isNotEmpty) {
+        pastReservationsSnapshot.docs.forEach((doc) {
+          Reservation reservationToAdd = Reservation.fromMap(doc.data());
+          reservations.add(reservationToAdd);
+        });
+      }
+
       return reservations;
     } catch (e) {
       print(e);
@@ -78,7 +69,10 @@ class DataReservationRepository implements ReservationRepository {
   Future<void> updateReservation(Reservation reservation) async {
     final int index =
         reservations.indexWhere((element) => element.id == reservation.id);
-
     reservations[index] = reservation;
+
+    await reservationReference
+        .doc(reservation.id)
+        .set(reservation.toMap(reservation));
   }
 }

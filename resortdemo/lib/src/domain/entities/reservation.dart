@@ -20,10 +20,14 @@ class Reservation {
       "id": reservation.id,
       "startDate": reservation.startDate,
       "endDate": reservation.endDate,
-      "reservationType": reservation.reservationType,
-      "villaType": reservation.villaType,
+      "reservationType": reservation.reservationType.toString(),
+      "villaType": reservation.villaType.toString(),
     };
   }
+
+  @override
+  String toString() =>
+      '$id, $startDate,$endDate, $reservationType, $reservationType';
 }
 
 enum ReservationType {

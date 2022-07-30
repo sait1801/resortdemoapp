@@ -4,7 +4,8 @@ import 'package:resortdemo/src/app/home/constants_home.dart';
 import 'package:resortdemo/src/app/home/home_controller.dart';
 import 'package:resortdemo/src/app/home/widgets/primary_button.dart';
 
-Widget villaDetailPage(HomeController controller, Size size) {
+Widget villaDetailPage(
+    HomeController controller, Size size, BuildContext context) {
   return Padding(
     padding: const EdgeInsets.all(20.0),
     child: SingleChildScrollView(
@@ -59,7 +60,7 @@ Widget villaDetailPage(HomeController controller, Size size) {
           primaryButton(
             kPrimaryColor,
             Colors.white,
-            () => print("Hello"),
+            () => controller.datePicking(size, context, GlobalKey()),
             "Book Now",
             null,
             size,
