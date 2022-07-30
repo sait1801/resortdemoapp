@@ -54,7 +54,7 @@ Widget login(
                   Colors.white,
                   Colors.black87,
                   () {},
-                  isLogin ? 'Sign in with Google' : 'Sign up with Goole',
+                  isLogin ? 'Sign in with Google' : 'Sign up with Google',
                   Colors.white,
                   size,
                   icon: 'assets/icons/google.png'),
@@ -70,32 +70,52 @@ Widget login(
               const SizedBox(
                 height: 20,
               ),
-              primaryButton(Colors.transparent, Colors.white, () {
-                print("Hello");
-              }, isLogin ? 'Login' : 'Register', Colors.white, size),
+              primaryButton(
+                  Colors.transparent,
+                  Colors.white,
+                  isLogin
+                      ? () {
+                          controller.chekIfUserOnFirestore(controller.email);
+                        }
+                      : () {
+                          controller.registerUser(
+                              controller.email!,
+                              controller.password!,
+                              "Saido Perfecto",
+                              "Yücekaya");
+                        },
+                  isLogin ? 'Login' : 'Register',
+                  Colors.white,
+                  size),
               const SizedBox(
                 height: 5,
               ),
-              isLogin
-                  ? TextButton(
-                      onPressed: (() {
-                        print('helloö');
-                      }),
-                      child: TextButton(
-                          onPressed: () {
+              TextButton(
+                onPressed: (() {
+                  print('helloö');
+                }),
+                child: TextButton(
+                    onPressed: isLogin
+                        ? () {
                             controller.pageController.animateToPage(1,
                                 duration: const Duration(microseconds: 300),
                                 curve: Curves.linear);
+                          }
+                        : () {
+                            controller.pageController.animateToPage(0,
+                                duration: const Duration(microseconds: 300),
+                                curve: Curves.linear);
                           },
-                          child: const Text(
-                            'Not registered yet? Create an account',
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          )),
-                    )
-                  : Container(),
+                    child: Text(
+                      isLogin
+                          ? 'Not registered yet? Create an account'
+                          : 'Have an account? Log in',
+                      style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    )),
+              ),
             ],
           ),
         ),

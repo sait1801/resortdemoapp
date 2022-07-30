@@ -59,6 +59,20 @@ class LoginController extends Controller {
       ).showDefaultPopup();
     };
 
+    _presenter.registerUserOnComplete = () {
+      //is this true ?
+      _presenter.startAuthentication(email!, password!);
+    };
+
+    _presenter.registerUserOnError = (e) {
+      PrimaryPopup(
+        context: getContext(),
+        title: 'Sorry',
+        content:
+            'Registering Went Wrong Please Try Again', //todo: change tihs text later
+      ).showDefaultPopup();
+    };
+
     _presenter.startAuthenticationOnComplete = () {
       FocusScope.of(getContext()).unfocus();
       NavigationHelper.navigateToHomeScreen(getContext());
@@ -75,5 +89,10 @@ class LoginController extends Controller {
 
   void chekIfUserOnFirestore(String? email) {
     if (email != null) _presenter.checkIfUserOnFirestore(email);
+  }
+
+  void registerUser(
+      String email, String password, String name, String lastName) {
+    _presenter.registerUser(email, password, name, lastName);
   }
 }

@@ -13,15 +13,20 @@ Widget inputTextField(LoginController controller, Size size,
         builder: (context, controller) {
       return TextField(
         onChanged: (text) {
-          if (labelText == 'Mail')
+          if (labelText == 'Mail') {
             controller.email = text;
-          else
+          } else {
             controller.password = text;
+          }
         },
+        obscureText: labelText == "Password"
+            ? true
+            : false, //this must be visible later but that icon is not registerd here
         textAlignVertical: TextAlignVertical.center,
         maxLength: 50,
-        expands: true,
-        maxLines: null,
+        expands: false,
+        maxLines: 1,
+        minLines: 1,
         style: const TextStyle(
             color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
         cursorHeight: 30,
@@ -31,7 +36,6 @@ Widget inputTextField(LoginController controller, Size size,
               borderRadius: BorderRadius.circular(10),
               borderSide: const BorderSide(color: Colors.white)),
           labelText: labelText,
-          hintText: 'mail@website.com',
           prefixIconColor: Colors.white,
           alignLabelWithHint: true,
         ),
