@@ -1,28 +1,43 @@
-import 'package:resortdemo/src/domain/entities/reservation.dart';
-import 'package:resortdemo/src/domain/repositories/reservation_repository.dart';
-import 'package:resortdemo/src/domain/usecases/create_reservation.dart';
-import 'package:resortdemo/src/domain/usecases/delete_reservation.dart';
-import 'package:resortdemo/src/domain/usecases/get_reservations.dart';
-import 'package:resortdemo/src/domain/usecases/update_reservation.dart';
+import 'package:resortdemo/src/domain/entities/message.dart';
+import 'package:resortdemo/src/domain/repositories/message_repository.dart';
+import 'package:resortdemo/src/domain/usecases/create_message.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class ForumPresenter extends Presenter {
-  final GetReservations _getReservations;
-  final CreateReservation _createReservation;
-  final CancelReservation _cancelReservation;
-  final UpdateReservation _updateReservation;
+  late Function createMessageOnComplete;
+  late Function createMessageOnError;
 
-  ForumPresenter(ReservationRepository _reservationRepository)
-      : _getReservations = GetReservations(_reservationRepository),
-        _cancelReservation = CancelReservation(_reservationRepository),
-        _updateReservation = UpdateReservation(_reservationRepository),
-        _createReservation = CreateReservation(_reservationRepository);
+  final CreateMessage _createMessage;
+
+  ForumPresenter(MessageRepository _messageRepository)
+      : _createMessage = CreateMessage(_messageRepository);
 
   @override
   void dispose() {
-    _getReservations.dispose();
-    _updateReservation.dispose();
-    _createReservation.dispose();
-    _cancelReservation.dispose();
+    _createMessage.dispose();
   }
+
+  void createMessage(Message message) {
+    _createMessage.execute(
+        _CreateMessagesObserver(this), CreateMessageParams(message));
+  }
+}
+
+class _CreateMessagesObserver extends Observer<List<Message>> {
+  final ForumPresenter _presenter;
+
+  _CreateMessagesObserver(this._presenter);
+
+  @override
+  void onComplete() {
+    _presenter.createMessageOnComplete();
+  }
+
+  @override
+  void onError(e) {
+    _presenter.createMessageOnError(e);
+  }
+
+  @override
+  void onNext(void response) {}
 }

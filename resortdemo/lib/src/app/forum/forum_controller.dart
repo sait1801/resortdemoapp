@@ -1,28 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:resortdemo/src/app/forum/forum_presenter.dart';
-import 'package:resortdemo/src/domain/entities/reservation.dart';
+import 'package:resortdemo/src/domain/entities/message.dart';
+import 'package:resortdemo/src/domain/repositories/message_repository.dart';
 import 'package:resortdemo/src/domain/repositories/reservation_repository.dart';
 
 class ForumController extends Controller {
   final ForumPresenter _presenter;
 
   ForumController(
-    ReservationRepository reservationRepository,
-  ) : _presenter = ForumPresenter(reservationRepository);
+    MessageRepository messageRepository,
+  ) : _presenter = ForumPresenter(messageRepository);
 
-  late TextEditingController controller1;
-  late TextEditingController controller2;
-  late TextEditingController controller3;
   late String contactNumber;
-  late String email;
+  late String name;
+  late String forumMessage;
 
   @override
   void onInitState() {
-    controller1 = TextEditingController();
-    controller2 = TextEditingController();
-    controller3 = TextEditingController();
-
     super.onInitState();
   }
 
@@ -33,7 +28,20 @@ class ForumController extends Controller {
   }
 
   @override
-  void initListeners() {}
+  void initListeners() {
+    _presenter.createMessageOnComplete = () {
+      print("Message is created");
+      refreshUI();
+    };
+
+    _presenter.createMessageOnError = () {
+      print("BURAYA PRIMARY POP UP YAZ");
+    };
+  }
+
+  void createMessage(Message message) {
+    _presenter.createMessage(message);
+  }
 
   void refreshScreeen() {
     refreshUI();

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -5,13 +7,16 @@ import 'package:resortdemo/src/app/forum/forum_controller.dart';
 import 'package:resortdemo/src/data/data_reservation_repository.dart';
 import 'package:resortdemo/src/app/home/widgets/bottom_nav_bar.dart';
 
+import '../../data/data_message_repository.dart';
+import '../home/widgets/primary_button.dart';
+
 class ForumView extends View {
   static const routeName = '/forum';
   @override
   // ignore: no_logic_in_create_state
   State<StatefulWidget> createState() => _ForumViewState(
         ForumController(
-          DataReservationRepository(),
+          DataMessageRepository(),
         ),
       );
 }
@@ -66,13 +71,19 @@ class _ForumViewState extends ViewState<ForumView, ForumController>
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
-            child: TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Full Name',
-                hintText: 'Enter your name',
-              ),
-            ),
+            child: ControlledWidgetBuilder<ForumController>(
+                builder: (context, controller) {
+              return TextField(
+                onChanged: (text) {
+                  controller.name = text;
+                },
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Full Name',
+                  hintText: 'Enter your name',
+                ),
+              );
+            }),
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(20, 30, 20, 20),
@@ -94,19 +105,33 @@ class _ForumViewState extends ViewState<ForumView, ForumController>
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.width / 3 * 2,
             padding: EdgeInsets.all(20),
-            child: TextField(
-              textAlignVertical: TextAlignVertical.top,
-              maxLength: 400,
-              expands: true,
-              maxLines: null,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Message',
-                hintText: 'Type your Message',
-                alignLabelWithHint: true,
-              ),
-            ),
-          )
+            child: ControlledWidgetBuilder<ForumController>(
+                builder: (context, controller) {
+              return TextField(
+                onChanged: (text) {
+                  controller.forumMessage = text;
+                },
+                textAlignVertical: TextAlignVertical.top,
+                maxLength: 400,
+                expands: true,
+                maxLines: null,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Message',
+                  hintText: 'Type your Message',
+                  alignLabelWithHint: true,
+                ),
+              );
+            }),
+          ),
+          primaryButton(
+            Color(0xff2ECC71),
+            Colors.white,
+            () => print("Hello"),
+            "Send your message",
+            null,
+            MediaQuery.of(context).size,
+          ),
         ],
       ),
     );
