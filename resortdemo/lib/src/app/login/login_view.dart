@@ -29,21 +29,19 @@ class _LoginViewState extends ViewState<LoginView, LoginController> {
   @override
   Widget get view {
     Size size = MediaQuery.of(context).size;
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: const SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.light,
-        statusBarBrightness: Brightness.dark,
-      ),
+    return SafeArea(
       child: ControlledWidgetBuilder<LoginController>(
           builder: (context, controller) {
-        return PageView(
-            key: globalKey,
-            physics: const NeverScrollableScrollPhysics(),
-            controller: controller.pageController,
-            children: [
-              login(controller, size),
-              signUp(controller),
-            ]);
+        return Scaffold(
+          body: PageView(
+              key: globalKey,
+              physics: const NeverScrollableScrollPhysics(),
+              controller: controller.pageController,
+              children: [
+                login(controller, size, context, true),
+                signUp(controller, size, context),
+              ]),
+        );
       }),
     );
   }

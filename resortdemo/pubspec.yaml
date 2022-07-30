@@ -61,6 +61,7 @@ flutter:
     - assets/images/weekend_apartment.jpg
     - assets/images/Longevity_inTime.png
     - assets/images/Longevity_inTimesvg.png
+    - assets/icons/google.png
   fonts:
     - family: Poppins
       fonts:

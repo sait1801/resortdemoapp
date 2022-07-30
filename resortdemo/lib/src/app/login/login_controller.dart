@@ -19,6 +19,8 @@ class LoginController extends Controller {
   String? password;
 
   late PageController pageController;
+  late TextEditingController mailTextController;
+  late TextEditingController passwordTextController;
 
   @override
   void onDisposed() {
@@ -30,6 +32,8 @@ class LoginController extends Controller {
   @override
   void onInitState() {
     pageController = PageController(initialPage: 0);
+    mailTextController = TextEditingController();
+    passwordTextController = TextEditingController();
 
     super.onInitState();
   }
