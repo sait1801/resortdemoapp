@@ -38,7 +38,7 @@ Widget animatedContainer(HomeController controller, Size size, Key globalKey) {
               controller: controller.pageController,
               physics: const NeverScrollableScrollPhysics(),
               children: [
-                villaDetailPage(controller, size),
+                villaDetailPage(controller, size, context),
               ],
             )
           : Column(
