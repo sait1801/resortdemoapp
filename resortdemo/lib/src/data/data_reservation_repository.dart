@@ -5,6 +5,7 @@ import 'package:resortdemo/src/data/data_authentication_repository.dart';
 import 'package:resortdemo/src/data/data_user_repository.dart';
 import 'package:resortdemo/src/domain/entities/reservation.dart';
 import 'package:resortdemo/src/domain/repositories/reservation_repository.dart';
+import '../domain/entities/user.dart' as userEnt;
 
 class DataReservationRepository implements ReservationRepository {
   static final _instance = DataReservationRepository._internal();
@@ -12,6 +13,8 @@ class DataReservationRepository implements ReservationRepository {
   factory DataReservationRepository() => _instance;
 
   static final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  static final _firebaseAuth = FirebaseAuth.instance;
+
   CollectionReference userReferance =
       FirebaseFirestore.instance.collection("users");
 
@@ -20,26 +23,25 @@ class DataReservationRepository implements ReservationRepository {
 
   List<Reservation> reservations = [];
 
-  final String userId = FirebaseAuth.instance.currentUser!.uid;
+  late String userId;
 
   @override
   Future<void> createReservation(Reservation reservation) async {
     try {
-      print('reztype: ${reservation.reservationType}');
+      userId = _firebaseAuth.currentUser!.uid;
+      print("Oldu");
+      print(userId);
+
+      // userEnt.User currentUser = DataUserRepository().currentUser;
       reservations.add(reservation);
       await reservationReference.doc(reservation.id).set(
             reservation.toMap(reservation),
           );
 
-      List<Map<String, dynamic>> reservationToJson = [];
-
-      print(userId);
-
-      for (Reservation res in reservations) {
-        reservationToJson.add(res.toMap(reservation));
-      }
-
-      await userReferance.doc(userId).set({'reservations': reservationToJson});
+      await userReferance
+          .doc(userId)
+          .collection('reservations')
+          .add(reservation.toMap(reservation));
     } catch (e) {
       print(e);
       rethrow;
@@ -92,12 +94,6 @@ class DataReservationRepository implements ReservationRepository {
     reservations[index] = reservation;
 
     await reservationReference
-        .doc(reservation.id)
-        .set(reservation.toMap(reservation));
-
-    await userReferance
-        .doc(userId)
-        .collection('reservations')
         .doc(reservation.id)
         .set(reservation.toMap(reservation));
   }

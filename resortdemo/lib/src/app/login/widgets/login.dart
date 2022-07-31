@@ -91,8 +91,8 @@ Widget login(
                           controller.registerUser(
                               controller.email!,
                               controller.password!,
-                              "Saido Perfecto",
-                              "Yücekaya");
+                              controller.name!,
+                              controller.lastName!);
                         },
                   isLogin ? 'Login' : 'Register',
                   Colors.white,
