@@ -29,13 +29,23 @@ class _ForumViewState extends ViewState<ForumView, ForumController>
 
   late TabController _tabController;
 
+  @override
+  // ignore: invalid_override_of_non_virtual_member
   void initState() {
     super.initState();
+
     _tabController = TabController(
-      initialIndex: 1,
+      animationDuration: const Duration(milliseconds: 300),
+      initialIndex: 0,
       length: 4,
       vsync: this,
     );
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -44,95 +54,104 @@ class _ForumViewState extends ViewState<ForumView, ForumController>
       backgroundColor: Colors.white,
       bottomNavigationBar: ControlledWidgetBuilder<ForumController>(
           builder: (context, controller) {
-        return bottomNavBar(_tabController, context);
+        return bottomNavBar(_tabController, context, 0);
       }),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(
-                MediaQuery.of(context).size.width - 120, 40, 20, 20),
-            child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shadowColor: Color.fromARGB(255, 64, 118, 235),
-                  elevation: 3,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0)),
-                ),
-                onPressed: () {},
-                child: SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: Icon(
-                      Icons.local_phone,
-                      size: 30,
-                    ))),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
-            child: ControlledWidgetBuilder<ForumController>(
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                  MediaQuery.of(context).size.width - 120, 40, 20, 20),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shadowColor: Color.fromARGB(255, 64, 118, 235),
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0)),
+                  ),
+                  onPressed: () {},
+                  child: SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: Icon(
+                        Icons.local_phone,
+                        size: 30,
+                      ))),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
+              child: ControlledWidgetBuilder<ForumController>(
+                  builder: (context, controller) {
+                return TextField(
+                  onChanged: (text) {
+                    controller.name = text;
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Full Name',
+                    hintText: 'Enter your name',
+                  ),
+                );
+              }),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(20, 30, 20, 20),
+              child: ControlledWidgetBuilder<ForumController>(
+                  builder: (context, controller) {
+                return TextField(
+                  maxLength: 12,
+                  keyboardType: TextInputType.number,
+                  onChanged: (text) {
+                    controller.contactNumber = text;
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Contact Number',
+                    hintText: 'Enter your number ex: +905395873678',
+                  ),
+                );
+              }),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.width / 3 * 2,
+              padding: EdgeInsets.all(20),
+              child: ControlledWidgetBuilder<ForumController>(
+                  builder: (context, controller) {
+                return TextField(
+                  onChanged: (text) {
+                    controller.forumMessage = text;
+                  },
+                  textAlignVertical: TextAlignVertical.top,
+                  maxLength: 400,
+                  expands: true,
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Message',
+                    hintText: 'Type your Message',
+                    alignLabelWithHint: true,
+                  ),
+                );
+              }),
+            ),
+            ControlledWidgetBuilder<ForumController>(
                 builder: (context, controller) {
-              return TextField(
-                onChanged: (text) {
-                  controller.name = text;
+              return primaryButton(
+                Color(0xff2ECC71),
+                Colors.white,
+                () {
+                  controller.createMessage();
                 },
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Full Name',
-                  hintText: 'Enter your name',
-                ),
+                "Send your message",
+                null,
+                MediaQuery.of(context).size,
               );
             }),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(20, 30, 20, 20),
-            child: ControlledWidgetBuilder<ForumController>(
-                builder: (context, controller) {
-              return TextField(
-                onChanged: (text) {
-                  controller.contactNumber = text;
-                },
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Contact Number',
-                  hintText: 'Enter your number',
-                ),
-              );
-            }),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.width / 3 * 2,
-            padding: EdgeInsets.all(20),
-            child: ControlledWidgetBuilder<ForumController>(
-                builder: (context, controller) {
-              return TextField(
-                onChanged: (text) {
-                  controller.forumMessage = text;
-                },
-                textAlignVertical: TextAlignVertical.top,
-                maxLength: 400,
-                expands: true,
-                maxLines: null,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Message',
-                  hintText: 'Type your Message',
-                  alignLabelWithHint: true,
-                ),
-              );
-            }),
-          ),
-          primaryButton(
-            Color(0xff2ECC71),
-            Colors.white,
-            () => print("Hello"),
-            "Send your message",
-            null,
-            MediaQuery.of(context).size,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

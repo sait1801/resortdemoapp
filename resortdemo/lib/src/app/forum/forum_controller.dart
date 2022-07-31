@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:resortdemo/src/app/forum/forum_presenter.dart';
+import 'package:resortdemo/src/app/splash/widgets/primary_popup.dart';
+import 'package:resortdemo/src/data/data_authentication_repository.dart';
+import 'package:resortdemo/src/data/data_user_repository.dart';
 import 'package:resortdemo/src/domain/entities/message.dart';
 import 'package:resortdemo/src/domain/repositories/message_repository.dart';
 import 'package:resortdemo/src/domain/repositories/reservation_repository.dart';
@@ -39,8 +42,15 @@ class ForumController extends Controller {
     };
   }
 
-  void createMessage(Message message) {
-    _presenter.createMessage(message);
+  void createMessage() {
+    if (name.isEmpty || contactNumber.isEmpty || forumMessage.isEmpty) {
+      PrimaryPopup(
+        context: getContext(),
+        title: 'Sorry',
+        content: 'Please fill All of the necessary fields.',
+      ).showDefaultPopup();
+    }
+    _presenter.createMessage(Message('', name, contactNumber, forumMessage));
   }
 
   void refreshScreeen() {

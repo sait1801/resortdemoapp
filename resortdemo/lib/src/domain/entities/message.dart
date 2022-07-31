@@ -1,5 +1,5 @@
 class Message {
-  final String id;
+  late String id;
   final String fullName;
   final String contactNumber;
   final String forumMessage;
@@ -23,6 +23,15 @@ class Message {
         contactNumber = message.contactNumber,
         forumMessage = message.forumMessage;
 
-  @override
-  String toString() => '$id, $fullName, $contactNumber, $forumMessage';
+  Map<String, dynamic> toMap(Message message) {
+    return {
+      "id": message.id,
+      "fullName": message.fullName,
+      "contactNumber": message.contactNumber,
+      "forumMessage": message.forumMessage,
+    };
+
+    @override
+    String toString() => '$id, $fullName, $contactNumber, $forumMessage';
+  }
 }
