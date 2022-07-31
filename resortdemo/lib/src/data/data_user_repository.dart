@@ -82,8 +82,8 @@ class DataUserRepository implements UserRepository {
   @override
   Future<void> signInAnonymously() async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInAnonymously(); //todo: user assigning ?
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInAnonymously();
     } catch (e) {
       print(e);
       print("Error at DataAuthRepo");

@@ -15,8 +15,12 @@ Widget inputTextField(LoginController controller, Size size,
         onChanged: (text) {
           if (labelText == 'Mail') {
             controller.email = text;
-          } else {
+          } else if ((labelText == 'Password')) {
             controller.password = text;
+          } else if (labelText == 'First Name') {
+            controller.name = text;
+          } else if ((labelText == 'Last Name')) {
+            controller.lastName = text;
           }
         },
         obscureText: labelText == "Password"
@@ -32,7 +36,7 @@ Widget inputTextField(LoginController controller, Size size,
         cursorHeight: 30,
         showCursor: true,
         decoration: InputDecoration(
-          border: OutlineInputBorder(
+          enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: const BorderSide(color: Colors.white)),
           labelText: labelText,

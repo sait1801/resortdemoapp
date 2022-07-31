@@ -21,7 +21,7 @@ class App extends StatelessWidget {
         HomeView.routeName: (ctx) => HomeView(),
       },
       theme: ThemeData(
-        fontFamily: 'Poppins', //todo: convert to DmSans
+        fontFamily: 'Poppins',
       ),
     );
   }

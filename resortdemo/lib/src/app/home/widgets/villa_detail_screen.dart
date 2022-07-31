@@ -9,7 +9,6 @@ Widget villaDetailPage(
   return Padding(
     padding: const EdgeInsets.all(20.0),
     child: SingleChildScrollView(
-      //todo: is this the best or only description part ?
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -42,7 +41,7 @@ Widget villaDetailPage(
                   color: Colors.black45,
                 ),
               ),
-            ], //todo: addresses may change so this will change too
+            ],
           ),
           const SizedBox(
             height: 20,
