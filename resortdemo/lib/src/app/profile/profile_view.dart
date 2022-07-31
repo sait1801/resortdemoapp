@@ -50,7 +50,7 @@ class _ProfileViewState extends ViewState<ProfileView, ProfileController>
   Widget get view {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: backGroundColor,
+      backgroundColor: Colors.white,
       bottomNavigationBar: ControlledWidgetBuilder<ProfileController>(
           builder: (context, controller) {
         return bottomNavBar(_tabController, context, 2);
@@ -65,6 +65,13 @@ class _ProfileViewState extends ViewState<ProfileView, ProfileController>
             itemBuilder: ((context, index) => SingleChildScrollView(
                   child: Column(
                     children: [
+                      const Text(
+                        "Profile",
+                        style: TextStyle(fontFamily: 'Poppins', fontSize: 30),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       reservationCard(controller.reservations[index], size,
                           controller, context),
                       const SizedBox(
