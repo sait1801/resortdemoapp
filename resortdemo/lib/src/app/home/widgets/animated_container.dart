@@ -11,10 +11,7 @@ Widget animatedContainer(HomeController controller, Size size, Key globalKey) {
     duration: const Duration(milliseconds: 300),
     curve: Curves.ease,
     width: size.width,
-    height: controller.isVillaDetails
-        ? size.height * 0.60
-        : size.height *
-            0.50, //todo: this part must be 0.6 but IDK why there is a problem
+    height: controller.isVillaDetails ? size.height * 0.60 : size.height * 0.50,
     decoration: const BoxDecoration(
       borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
       color: kLightBackgroundColor,
@@ -34,7 +31,6 @@ Widget animatedContainer(HomeController controller, Size size, Key globalKey) {
         ControlledWidgetBuilder<HomeController>(builder: (context, controller) {
       return controller.isVillaDetails
           ? PageView(
-              //todo: no need for pageview actually but can be userd for more effective page designs
               controller: controller.pageController,
               physics: const NeverScrollableScrollPhysics(),
               children: [

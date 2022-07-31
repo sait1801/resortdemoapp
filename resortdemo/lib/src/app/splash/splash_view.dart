@@ -8,7 +8,7 @@ import '../../data/data_user_repository.dart';
 class SplashView extends View {
   static const routeName = '/splash';
 
-  SplashView({Key? key}) : super(key: key); //todo: what is this
+  SplashView({Key? key}) : super(key: key);
 
   @override
   // ignore: no_logic_in_create_state

@@ -65,8 +65,18 @@ Widget login(
               const SizedBox(
                 height: 10,
               ),
-              inputStack(controller, size, context, 'Mail'),
-              inputStack(controller, size, context, 'Password'),
+              inputStack(
+                controller,
+                size,
+                context,
+                isLogin ? 'Mail' : 'First Name',
+              ),
+              inputStack(
+                controller,
+                size,
+                context,
+                isLogin ? 'Password' : 'Last Name',
+              ),
               const SizedBox(
                 height: 20,
               ),

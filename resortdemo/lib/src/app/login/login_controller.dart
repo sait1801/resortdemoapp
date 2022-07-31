@@ -17,6 +17,8 @@ class LoginController extends Controller {
 
   String? email;
   String? password;
+  String? name;
+  String? lastName;
 
   late PageController pageController;
   late TextEditingController mailTextController;
@@ -69,7 +71,7 @@ class LoginController extends Controller {
         context: getContext(),
         title: 'Sorry',
         content:
-            'Registering Went Wrong Please Try Again', //todo: change tihs text later
+            'Sorry, we can\'t find an account with this email address. Please try again',
       ).showDefaultPopup();
     };
 

@@ -10,7 +10,6 @@ class ServicePopup {
 
   Future<void> showCustomPopUp() async {
     late String gifUrl;
-    //todo: this part is actually unnecessary but I would like to do things in this way :D
     switch (text) {
       case 'Fitness & Spa':
         gifUrl = 'assets/animations/spa_fitness.gif';
