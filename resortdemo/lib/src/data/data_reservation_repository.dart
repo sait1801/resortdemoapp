@@ -23,16 +23,13 @@ class DataReservationRepository implements ReservationRepository {
 
   List<Reservation> reservations = [];
 
-  late String userId;
+  late String userId = _firebaseAuth.currentUser!.uid;
 
   @override
   Future<void> createReservation(Reservation reservation) async {
     try {
       userId = _firebaseAuth.currentUser!.uid;
-      print("Oldu");
-      print(userId);
 
-      // userEnt.User currentUser = DataUserRepository().currentUser;
       reservations.add(reservation);
       await reservationReference.doc(reservation.id).set(
             reservation.toMap(reservation),
@@ -41,7 +38,8 @@ class DataReservationRepository implements ReservationRepository {
       await userReferance
           .doc(userId)
           .collection('reservations')
-          .add(reservation.toMap(reservation));
+          .doc(reservation.id)
+          .set(reservation.toMap(reservation));
     } catch (e) {
       print(e);
       rethrow;
@@ -96,5 +94,8 @@ class DataReservationRepository implements ReservationRepository {
     await reservationReference
         .doc(reservation.id)
         .set(reservation.toMap(reservation));
+
+    await deleteReservation(reservation.id);
+    await createReservation(reservation);
   }
 }
