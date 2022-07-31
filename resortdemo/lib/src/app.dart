@@ -6,6 +6,8 @@ import 'package:resortdemo/src/app/splash/splash_view.dart';
 import 'app/home/home_view.dart';
 
 class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([

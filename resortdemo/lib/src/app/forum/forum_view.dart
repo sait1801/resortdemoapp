@@ -35,7 +35,7 @@ class _ForumViewState extends ViewState<ForumView, ForumController>
     super.initState();
 
     _tabController = TabController(
-      animationDuration: const Duration(milliseconds: 300),
+      animationDuration: const Duration(milliseconds: 500),
       initialIndex: 0,
       length: 4,
       vsync: this,

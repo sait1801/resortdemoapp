@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:resortdemo/src/data/data_authentication_repository.dart';
 import 'package:resortdemo/src/data/data_user_repository.dart';
 import 'package:resortdemo/src/domain/entities/reservation.dart';
 import 'package:resortdemo/src/domain/repositories/reservation_repository.dart';
@@ -26,14 +27,19 @@ class DataReservationRepository implements ReservationRepository {
     try {
       print('reztype: ${reservation.reservationType}');
       reservations.add(reservation);
-      await reservationReference
-          .doc(reservation.id)
-          .set(reservation.toMap(reservation));
+      await reservationReference.doc(reservation.id).set(
+            reservation.toMap(reservation),
+          );
 
-      await userReferance
-          .doc(userId)
-          .collection('reservations')
-          .add(reservation.toMap(reservation));
+      List<Map<String, dynamic>> reservationToJson = [];
+
+      print(userId);
+
+      for (Reservation res in reservations) {
+        reservationToJson.add(res.toMap(reservation));
+      }
+
+      await userReferance.doc(userId).set({'reservations': reservationToJson});
     } catch (e) {
       print(e);
       rethrow;
@@ -45,6 +51,12 @@ class DataReservationRepository implements ReservationRepository {
     try {
       reservations.removeWhere((element) => element.id == reservationId);
       await reservationReference.doc(reservationId).delete();
+
+      await userReferance
+          .doc(userId)
+          .collection('reservations')
+          .doc(reservationId)
+          .delete();
     } catch (e) {
       print(e);
       rethrow;
@@ -80,6 +92,12 @@ class DataReservationRepository implements ReservationRepository {
     reservations[index] = reservation;
 
     await reservationReference
+        .doc(reservation.id)
+        .set(reservation.toMap(reservation));
+
+    await userReferance
+        .doc(userId)
+        .collection('reservations')
         .doc(reservation.id)
         .set(reservation.toMap(reservation));
   }

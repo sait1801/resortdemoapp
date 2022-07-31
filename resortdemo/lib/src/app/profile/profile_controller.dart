@@ -78,4 +78,46 @@ class ProfileController extends Controller {
   void getReservations() {
     _presenter.getReservations();
   }
+
+  Future<void> changeDate(BuildContext context, Size size, GlobalKey key,
+      Reservation reservation) async {
+    var newDateRange = await showDateRangePicker(
+      context: context,
+      builder: (context, child) {
+        return Center(
+          child: SizedBox(
+            width: size.width * 0.7,
+            height: size.height * 0.6,
+            child: Theme(
+              key: key,
+              data: Theme.of(context).copyWith(
+                colorScheme: const ColorScheme.light(
+                  primary: Colors.yellow, // header background color
+                  onPrimary: Colors.black, // header text color
+                  onSurface: Colors.green, // body text color
+                ),
+                textButtonTheme: TextButtonThemeData(
+                  style: TextButton.styleFrom(
+                    primary: Colors.red, // button text color
+                  ),
+                ),
+              ),
+              child: child!,
+            ),
+          ),
+        );
+      },
+      firstDate: DateTime(DateTime.now().year - 5),
+      lastDate: DateTime(DateTime.now().year + 5),
+    );
+
+    var updatedReservation = Reservation(newDateRange!.start, newDateRange.end,
+        reservation.reservationType, reservation.villaType, reservation.id);
+
+    _presenter.updateReservation(updatedReservation);
+
+    _presenter.getReservations();
+
+    refreshUI();
+  }
 }

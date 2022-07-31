@@ -30,6 +30,9 @@ dev_dependencies:
   #page transition
   page_transition: ^2.0.9
 
+  #stacked page view
+  stacked_page_view: ^1.1.2
+
   #animations
   lottie: ^1.2.1
 
