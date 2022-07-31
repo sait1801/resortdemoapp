@@ -33,7 +33,7 @@ class _ProfileViewState extends ViewState<ProfileView, ProfileController>
   void initState() {
     super.initState();
     _tabController = TabController(
-      animationDuration: const Duration(milliseconds: 300),
+      animationDuration: const Duration(milliseconds: 500),
       initialIndex: 2,
       length: 4,
       vsync: this,
@@ -50,10 +50,10 @@ class _ProfileViewState extends ViewState<ProfileView, ProfileController>
   Widget get view {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: backGroundColor,
+      backgroundColor: Colors.white,
       bottomNavigationBar: ControlledWidgetBuilder<ProfileController>(
           builder: (context, controller) {
-        return bottomNavBar(_tabController, context, 1);
+        return bottomNavBar(_tabController, context, 2);
       }),
       body: SafeArea(
         child: ControlledWidgetBuilder<ProfileController>(
@@ -65,7 +65,15 @@ class _ProfileViewState extends ViewState<ProfileView, ProfileController>
             itemBuilder: ((context, index) => SingleChildScrollView(
                   child: Column(
                     children: [
-                      reservationCard(controller.reservations[index], size),
+                      const Text(
+                        "Profile",
+                        style: TextStyle(fontFamily: 'Poppins', fontSize: 30),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      reservationCard(controller.reservations[index], size,
+                          controller, context),
                       const SizedBox(
                         height: 15,
                       )

@@ -5,15 +5,22 @@ class Reservation {
   final ReservationType reservationType;
   final VillaType villaType;
 
-  Reservation(this.startDate, this.endDate, this.reservationType,
-      this.villaType, this.id);
+  Reservation(
+    this.startDate,
+    this.endDate,
+    this.reservationType,
+    this.villaType,
+    this.id,
+  );
 
   Reservation.fromMap(Map<String, dynamic> data)
       : id = data['id'],
         startDate = data['startDate'].toDate(),
         endDate = data['endDate'].toDate(),
         reservationType = resType(data['reservationType']),
-        villaType = villa(data['villaType']);
+        villaType = villa(
+          data['villaType'],
+        );
 
   Map<String, dynamic> toMap(Reservation reservation) {
     return {

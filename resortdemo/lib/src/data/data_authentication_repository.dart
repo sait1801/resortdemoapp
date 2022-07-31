@@ -30,7 +30,8 @@ class DataAuthenticationRepository implements AuthenticationRepository {
         email: email,
         password: password,
       );
-      this.userId = userCredential.additionalUserInfo!.username;
+      // this.userId = userCredential.additionalUserInfo!.username;
+      userId = _firebaseAuth.currentUser!.uid;
     } on FirebaseAuthException catch (e) {
       print(e);
       rethrow;
@@ -50,10 +51,11 @@ class DataAuthenticationRepository implements AuthenticationRepository {
         email: email,
         password: password,
       );
+      //todo: null is given
+      userEnt.User user = userEnt.User(name, lastName, email, password, []);
 
-      userEnt.User user = userEnt.User(name, lastName, email, password);
-
-      this.userId = userCredential.additionalUserInfo!.username;
+      //userId = userCredential.additionalUserInfo!.username;
+      userId = _firebaseAuth.currentUser!.uid;
 
       await userReferance.doc(userId).set(user.toMap(user, password));
     } on FirebaseAuthException catch (e) {

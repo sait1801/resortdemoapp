@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:resortdemo/src/data/data_authentication_repository.dart';
 import 'package:resortdemo/src/data/data_user_repository.dart';
 import 'package:resortdemo/src/domain/entities/reservation.dart';
 import 'package:resortdemo/src/domain/repositories/reservation_repository.dart';
+import '../domain/entities/user.dart' as userEnt;
 
 class DataReservationRepository implements ReservationRepository {
   static final _instance = DataReservationRepository._internal();
@@ -11,6 +13,8 @@ class DataReservationRepository implements ReservationRepository {
   factory DataReservationRepository() => _instance;
 
   static final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  static final _firebaseAuth = FirebaseAuth.instance;
+
   CollectionReference userReferance =
       FirebaseFirestore.instance.collection("users");
 
@@ -19,21 +23,23 @@ class DataReservationRepository implements ReservationRepository {
 
   List<Reservation> reservations = [];
 
-  final String userId = FirebaseAuth.instance.currentUser!.uid;
+  late String userId = _firebaseAuth.currentUser!.uid;
 
   @override
   Future<void> createReservation(Reservation reservation) async {
     try {
-      print('reztype: ${reservation.reservationType}');
+      userId = _firebaseAuth.currentUser!.uid;
+
       reservations.add(reservation);
-      await reservationReference
-          .doc(reservation.id)
-          .set(reservation.toMap(reservation));
+      await reservationReference.doc(reservation.id).set(
+            reservation.toMap(reservation),
+          );
 
       await userReferance
           .doc(userId)
           .collection('reservations')
-          .add(reservation.toMap(reservation));
+          .doc(reservation.id)
+          .set(reservation.toMap(reservation));
     } catch (e) {
       print(e);
       rethrow;
@@ -45,6 +51,12 @@ class DataReservationRepository implements ReservationRepository {
     try {
       reservations.removeWhere((element) => element.id == reservationId);
       await reservationReference.doc(reservationId).delete();
+
+      await userReferance
+          .doc(userId)
+          .collection('reservations')
+          .doc(reservationId)
+          .delete();
     } catch (e) {
       print(e);
       rethrow;
@@ -82,5 +94,8 @@ class DataReservationRepository implements ReservationRepository {
     await reservationReference
         .doc(reservation.id)
         .set(reservation.toMap(reservation));
+
+    await deleteReservation(reservation.id);
+    await createReservation(reservation);
   }
 }

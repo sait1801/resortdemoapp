@@ -16,6 +16,8 @@ class DataUserRepository implements UserRepository {
   static final _firestore = FirebaseFirestore.instance;
   late userEnt.User _currentUser;
 
+  late String userId;
+
   @override
   Future<bool> get isUserLoggedIn async {
     try {
@@ -74,6 +76,10 @@ class DataUserRepository implements UserRepository {
         userEnt.User user = userEnt.User.fromMap(
             querySnapshot.docs.first.data(), _firebaseAuth.currentUser!.uid);
         _currentUser = user;
+
+        userId = _firebaseAuth.currentUser!.uid;
+        print("HELLOfromuserrep");
+        print(userId);
 
         print("currentUser: $_currentUser");
       }
