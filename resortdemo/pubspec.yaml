@@ -62,6 +62,12 @@ flutter:
     - assets/images/Longevity_inTime.png
     - assets/images/Longevity_inTimesvg.png
     - assets/icons/google.png
+    - assets/images/mastercard.png
+    - assets/images/visa.png
+    - assets/images/random1.jpg
+    - assets/images/random2.jpg
+    - assets/images/random3.png
+
   fonts:
     - family: Poppins
       fonts:

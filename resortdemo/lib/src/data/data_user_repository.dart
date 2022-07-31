@@ -45,6 +45,11 @@ class DataUserRepository implements UserRepository {
           .get();
 
       if (querySnapshot.docs.isNotEmpty) {
+        userEnt.User user = userEnt.User.fromMap(
+            querySnapshot.docs.first.data(), _firebaseAuth.currentUser!.uid);
+        _currentUser = user;
+
+        print("currentUser: $_currentUser");
         return true;
       }
 

@@ -18,16 +18,19 @@ class DataAuthenticationRepository implements AuthenticationRepository {
   CollectionReference userReferance =
       FirebaseFirestore.instance.collection("users");
 
+  late String? userId;
+  late UserCredential userCredential;
+
   @override
   Future<void> startAuthentication(String email, String password) async {
     try {
       print("Start Auth");
       email = email;
-      UserCredential userCredentials =
-          await _firebaseAuth.signInWithEmailAndPassword(
+      userCredential = await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+      this.userId = userCredential.additionalUserInfo!.username;
     } on FirebaseAuthException catch (e) {
       print(e);
       rethrow;
@@ -43,14 +46,14 @@ class DataAuthenticationRepository implements AuthenticationRepository {
     try {
       print("Start Registration");
       email = email;
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
       userEnt.User user = userEnt.User(name, lastName, email, password);
 
-      final String userId = FirebaseAuth.instance.currentUser!.uid;
+      this.userId = userCredential.additionalUserInfo!.username;
 
       await userReferance.doc(userId).set(user.toMap(user, password));
     } on FirebaseAuthException catch (e) {

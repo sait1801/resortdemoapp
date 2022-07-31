@@ -18,7 +18,7 @@ Widget villaDetailPage(
                 width: 3,
               ),
               Text(
-                controller.selectedVillaName!,
+                controller.selectedVillaName,
                 style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 20,
@@ -59,7 +59,10 @@ Widget villaDetailPage(
           primaryButton(
             kPrimaryColor,
             Colors.white,
-            () => controller.datePicking(size, context, GlobalKey()),
+            () {
+              controller.datePicking(size, context, GlobalKey());
+              // controller.pay(context, size);
+            },
             "Book Now",
             null,
             size,

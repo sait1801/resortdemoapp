@@ -26,15 +26,14 @@ class _HomeViewState extends ViewState<HomeView, HomeController>
     HomeController homeController,
   ) : super(homeController);
 
-  late AnimationController _animationController;
   late TabController _tabController;
 
   @override
   // ignore: invalid_override_of_non_virtual_member
   void initState() {
     super.initState();
-    _animationController = AnimationController(vsync: this);
     _tabController = TabController(
+      animationDuration: const Duration(milliseconds: 300),
       initialIndex: 1,
       length: 4,
       vsync: this,
@@ -43,7 +42,7 @@ class _HomeViewState extends ViewState<HomeView, HomeController>
 
   @override
   void dispose() {
-    _animationController.dispose();
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -54,7 +53,7 @@ class _HomeViewState extends ViewState<HomeView, HomeController>
       backgroundColor: backGroundColor,
       bottomNavigationBar: ControlledWidgetBuilder<HomeController>(
           builder: (context, controller) {
-        return bottomNavBar(controller, _tabController);
+        return bottomNavBar(_tabController, context, 1);
       }),
       body: SafeArea(
         child: Stack(
