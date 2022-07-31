@@ -60,7 +60,10 @@ Widget villaDetailPage(
           primaryButton(
             kPrimaryColor,
             Colors.white,
-            () => controller.datePicking(size, context, GlobalKey()),
+            () {
+              controller.datePicking(size, context, GlobalKey());
+              // controller.pay(context, size);
+            },
             "Book Now",
             null,
             size,

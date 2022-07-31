@@ -36,15 +36,17 @@ Widget bottomNavBar(
       tabIconSelectedColor: Colors.white,
       tabBarColor: const Color(0xfffbfbfb),
       onTabItemSelected: (int value) {
-        if (value == 0 || tabController.index != value) {
+        if (value == 0 && tabController.index != value) {
           tabController.index = 0;
           NavigationHelper.navigateToForumView(context);
-        } else if (value == 1 || tabController.index != value) {
+        } else if (value == 1 && tabController.index != value) {
           tabController.index = 1;
-
           NavigationHelper.navigateToHomeScreen(context);
-        } else {
+        } else if (value == 2 && tabController.index != value) {
           tabController.index = 2;
+          NavigationHelper.navigateToProfileScreen(context);
+        } else {
+          print("BOttom Nav Bar crashed");
         }
       });
 }

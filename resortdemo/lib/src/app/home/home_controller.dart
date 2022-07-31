@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:resortdemo/src/app/home/home_presenter.dart';
+import 'package:resortdemo/src/app/home/widgets/payment_card_button.dart';
 import 'package:resortdemo/src/domain/entities/reservation.dart';
 import 'package:resortdemo/src/domain/repositories/reservation_repository.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class HomeController extends Controller {
   final HomePresenter _presenter;
@@ -147,14 +149,51 @@ class HomeController extends Controller {
 
     print('$newDateRange, $reservationType, $villaType');
 
-    _presenter.createReservation(
-      Reservation(
-        newDateRange!.start,
-        newDateRange!.end,
-        reservationType!,
-        villaType!,
-        DateTime.now().toIso8601String(),
-      ),
-    );
+    await pay(context, size);
+  }
+
+  Future<void> pay(BuildContext context, Size size) async {
+    await Alert(
+        context: context,
+        title: 'Payment Method',
+        content: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            const Text(
+              'Please select your prefrable payment method',
+              style: TextStyle(
+                fontSize: 15,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w200,
+              ),
+            ),
+            const SizedBox(height: 40),
+            paymentCardButon(size, imagePath: 'assets/images/mastercard.png'),
+            const SizedBox(
+              height: 20,
+            ),
+            paymentCardButon(size, imagePath: 'assets/images/visa.png'),
+          ],
+        ),
+        buttons: [
+          DialogButton(
+            onPressed: () {
+              _presenter.createReservation(
+                Reservation(
+                  newDateRange!.start,
+                  newDateRange!.end,
+                  reservationType!,
+                  villaType!,
+                  DateTime.now().toIso8601String(),
+                ),
+              );
+              Navigator.pop(context);
+            },
+            child: const Text(
+              "PAY",
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+          )
+        ]).show();
   }
 }

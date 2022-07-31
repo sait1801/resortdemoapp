@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:resortdemo/src/app/login/login_view.dart';
+import 'package:resortdemo/src/app/profile/profile_view.dart';
 import 'package:resortdemo/src/app/splash/splash_view.dart';
 import 'package:resortdemo/src/app/forum/forum_view.dart';
 
@@ -15,6 +16,19 @@ class NavigationHelper {
       context,
       PageTransition(
         child: LoginView(),
+        type: PageTransitionType.fade,
+        curve: _TRANSITION_CURVE,
+        duration: _TRANSITION_DURATION,
+      ),
+      (_) => false,
+    );
+  }
+
+  static void navigateToProfileScreen(BuildContext context) {
+    Navigator.pushAndRemoveUntil(
+      context,
+      PageTransition(
+        child: ProfileView(),
         type: PageTransitionType.fade,
         curve: _TRANSITION_CURVE,
         duration: _TRANSITION_DURATION,
@@ -48,18 +62,6 @@ class NavigationHelper {
       (_) => false,
     );
   }
-
-  // static void navigateToProfileScreen(BuildContext context) {
-  //   Navigator.push(
-  //     context,
-  //     PageTransition(
-  //       child: UserProfileView(),
-  //       type: PageTransitionType.fade,
-  //       curve: _TRANSITION_CURVE,
-  //       duration: _TRANSITION_DURATION,
-  //     ),
-  //   );
-  // }
 
   static void navigateToForumView(BuildContext context) {
     Navigator.pushAndRemoveUntil(

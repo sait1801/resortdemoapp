@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 Widget primaryButton(Color buttonColor, Color textColor, Function onPressed,
     String text, Color? borderColor, Size size,
-    {String? icon}) {
+    {String? icon, double? customWidth}) {
   return Container(
     height: 45,
-    width: size.width,
+    width: customWidth ?? size.width,
     margin: const EdgeInsets.symmetric(horizontal: 13),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(4),
